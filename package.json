@@ -1,0 +1,45 @@
+{
+  "name": "repo-doctor",
+  "version": "1.0.0",
+  "description": "A local CLI that produces practical, deterministic repository health reports.",
+  "type": "module",
+  "bin": {
+    "repo-doctor": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "docs/repo-doctor-report.schema.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "cli",
+    "repository",
+    "health",
+    "lint",
+    "audit"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@types/node": "^24.2.1",
+    "eslint": "^9.33.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.1",
+    "vitest": "^3.2.4"
+  }
+}
