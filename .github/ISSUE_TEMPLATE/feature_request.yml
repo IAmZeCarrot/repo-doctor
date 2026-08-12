@@ -1,0 +1,31 @@
+name: Rule or feature request
+description: Propose a focused, deterministic improvement
+title: '[Proposal]: '
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What repository-health decision is currently difficult or incorrect?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Explain the evidence, severity, remediation, and likely false positives.
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Safe examples
+      description: Include minimal, non-sensitive healthy and unhealthy examples where useful.
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Project constraints
+      options:
+        - label: The proposal can remain local, deterministic, and independent of repository APIs.
+          required: true
