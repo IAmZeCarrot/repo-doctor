@@ -1,0 +1,1 @@
+export const passingFixture = true;

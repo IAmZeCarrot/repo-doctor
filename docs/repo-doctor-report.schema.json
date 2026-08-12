@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/IAmZeCarrot/repo-doctor/blob/main/docs/repo-doctor-report.schema.json",
+  "title": "Repo Doctor report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "tool",
+    "repository",
+    "generatedAt",
+    "summary",
+    "findings"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "const": "repo-doctor" },
+        "version": { "type": "string" }
+      }
+    },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": { "path": { "type": "string" } }
+    },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["error", "warning", "info", "total"],
+      "properties": {
+        "error": { "type": "integer", "minimum": 0 },
+        "warning": { "type": "integer", "minimum": 0 },
+        "info": { "type": "integer", "minimum": 0 },
+        "total": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "severity", "title", "evidence", "remediation"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+/[a-z0-9-]+$" },
+          "severity": { "enum": ["error", "warning", "info"] },
+          "title": { "type": "string", "minLength": 1 },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" }
+          },
+          "remediation": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}
