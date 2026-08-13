@@ -1,0 +1,68 @@
+name: Repo Doctor
+description: Scan a checked-out repository and publish a readable health report.
+author: IAmZeCarrot
+
+branding:
+  icon: activity
+  color: green
+
+inputs:
+  path:
+    description: Repository path to scan, relative to the workflow workspace.
+    required: false
+    default: .
+  fail-on:
+    description: Finding severity that fails the step (error, warning, or never).
+    required: false
+    default: error
+  artifact-name:
+    description: Name of the uploaded JSON report artifact.
+    required: false
+    default: repo-doctor-report
+
+outputs:
+  report-path:
+    description: Absolute path to the generated JSON report.
+    value: ${{ steps.scan.outputs.report-path }}
+  errors:
+    description: Number of error findings.
+    value: ${{ steps.scan.outputs.errors }}
+  warnings:
+    description: Number of warning findings.
+    value: ${{ steps.scan.outputs.warnings }}
+  findings:
+    description: Total number of findings.
+    value: ${{ steps.scan.outputs.findings }}
+
+runs:
+  using: composite
+  steps:
+    - name: Prepare Repo Doctor
+      shell: bash
+      run: |
+        npm ci --ignore-scripts --prefix "$GITHUB_ACTION_PATH"
+        npm run build --prefix "$GITHUB_ACTION_PATH"
+
+    - name: Scan repository
+      id: scan
+      shell: bash
+      env:
+        REPO_DOCTOR_PATH: ${{ inputs.path }}
+        REPO_DOCTOR_FAIL_ON: ${{ inputs.fail-on }}
+      run: node "$GITHUB_ACTION_PATH/action/runner.mjs"
+
+    - name: Upload JSON report
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ steps.scan.outputs.report-path }}
+        if-no-files-found: error
+
+    - name: Apply failure threshold
+      if: steps.scan.outputs.threshold-exceeded == 'true'
+      shell: bash
+      env:
+        REPO_DOCTOR_FAIL_ON: ${{ inputs.fail-on }}
+      run: |
+        echo "Repo Doctor findings crossed the '$REPO_DOCTOR_FAIL_ON' threshold."
+        exit 1

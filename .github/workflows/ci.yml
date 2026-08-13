@@ -23,3 +23,22 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm pack --dry-run
+
+  action-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run the local Action
+        id: doctor
+        uses: ./
+        with:
+          fail-on: never
+          artifact-name: repo-doctor-action-smoke
+      - name: Verify Action outputs
+        env:
+          REPORT_PATH: ${{ steps.doctor.outputs.report-path }}
+          FINDINGS: ${{ steps.doctor.outputs.findings }}
+        run: |
+          test -s "$REPORT_PATH"
+          node -e "const report = require(process.env.REPORT_PATH); if (report.schemaVersion !== '1.0.0') process.exit(1)"
+          test "$FINDINGS" -ge 0
