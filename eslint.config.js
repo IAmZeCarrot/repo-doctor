@@ -9,6 +9,7 @@ export default tseslint.config(
       'test/fixtures/',
       'eslint.config.js',
       'prettier.config.js',
+      'action/runner.mjs',
     ],
   },
   eslint.configs.recommended,
@@ -17,9 +18,7 @@ export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
-        projectService: {
-          allowDefaultProject: ['action/*.mjs'],
-        },
+        projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
     },
