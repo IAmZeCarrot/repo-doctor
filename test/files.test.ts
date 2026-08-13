@@ -26,7 +26,11 @@ describe('file collection', () => {
       path.join(root, 'node_modules', 'ignored.js'),
       'ignored',
     );
-    await fs.symlink(path.join(root, 'src'), path.join(root, 'linked-src'));
+    await fs.symlink(
+      path.join(root, 'src'),
+      path.join(root, 'linked-src'),
+      process.platform === 'win32' ? 'junction' : 'dir',
+    );
 
     expect([...(await collectFiles(root))]).toEqual(['src/a.ts', 'z.txt']);
   });
