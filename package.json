@@ -33,6 +33,14 @@
     "audit"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IAmZeCarrot/repo-doctor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IAmZeCarrot/repo-doctor/issues"
+  },
+  "homepage": "https://github.com/IAmZeCarrot/repo-doctor#readme",
   "devDependencies": {
     "@eslint/js": "^9.33.0",
     "@types/node": "^24.2.1",

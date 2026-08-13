@@ -57,4 +57,18 @@ describe('CLI', () => {
     expect(await run(['unknown'], vi.fn(), errors)).toBe(2);
     expect(errors).toHaveBeenCalledOnce();
   });
+
+  it.each([
+    [['scan', '--format'], '--format must be text or json'],
+    [['scan', '--fail-on'], '--fail-on must be error, warning, or never'],
+    [['scan', '--unknown'], 'Unknown option: --unknown'],
+    [['scan', 'one', 'two'], 'Unexpected argument: two'],
+  ])(
+    'rejects invalid arguments without scanning: %j',
+    async (args, message) => {
+      const errors = vi.fn();
+      expect(await run(args, vi.fn(), errors)).toBe(2);
+      expect(errors).toHaveBeenCalledWith(`repo-doctor: ${message}`);
+    },
+  );
 });

@@ -111,6 +111,8 @@ npm run check
 
 The check command verifies formatting, lint rules, TypeScript types, unit and integration tests, and the production build. Test repositories live in `test/fixtures`. GitHub Actions runs the same command on pull requests and pushes to `main`.
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow and guidance for adding or changing rules. Please report vulnerabilities according to [SECURITY.md](SECURITY.md), rather than in a public issue.
+
 ## Limitations
 
 - Detection uses conventional filenames and lightweight content inspection. Repo Doctor does not execute project code or infer every custom layout.

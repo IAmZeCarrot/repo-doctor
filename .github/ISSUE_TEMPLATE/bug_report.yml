@@ -1,0 +1,48 @@
+name: Bug report
+description: Report reproducible incorrect behavior
+title: '[Bug]: '
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report a problem. Do not include credentials or private repository contents.
+  - type: input
+    id: version
+    attributes:
+      label: Repo Doctor version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version and operating system
+      placeholder: Node.js 20.16.0 on Windows 11
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Provide safe fixture files and the exact command. Remove sensitive content.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and removed secrets and private repository content.
+          required: true
