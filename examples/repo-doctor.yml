@@ -1,0 +1,19 @@
+name: Repository health
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repo-doctor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: IAmZeCarrot/repo-doctor@main
+        with:
+          fail-on: warning
