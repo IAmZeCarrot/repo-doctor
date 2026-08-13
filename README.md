@@ -24,6 +24,43 @@ You can also run the built CLI without linking it:
 node dist/cli.js scan .
 ```
 
+## GitHub Action
+
+To scan every pull request without installing the CLI locally, add this workflow to `.github/workflows/repo-doctor.yml`:
+
+```yaml
+name: Repository health
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  repo-doctor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: IAmZeCarrot/repo-doctor@main
+        with:
+          fail-on: warning
+```
+
+The Action adds a readable report to the job summary and uploads the complete JSON report as the `repo-doctor-report` artifact. It performs the same local, deterministic scan as the CLI and does not need a token or make network requests while scanning.
+
+### Action inputs
+
+| Input | Default | Purpose |
+| --- | --- | --- |
+| `path` | `.` | Repository path to scan, relative to the workflow workspace |
+| `fail-on` | `error` | Fail on `error`, `warning`, or `never` |
+| `artifact-name` | `repo-doctor-report` | Name of the uploaded JSON artifact |
+
+The Action exposes `report-path`, `errors`, `warnings`, and `findings` outputs for later steps. See [the complete example](examples/repo-doctor.yml).
+
 ## Usage
 
 ```text
