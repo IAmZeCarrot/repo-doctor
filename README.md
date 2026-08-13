@@ -53,11 +53,11 @@ The Action adds a readable report to the job summary and uploads the complete JS
 
 ### Action inputs
 
-| Input | Default | Purpose |
-| --- | --- | --- |
-| `path` | `.` | Repository path to scan, relative to the workflow workspace |
-| `fail-on` | `error` | Fail on `error`, `warning`, or `never` |
-| `artifact-name` | `repo-doctor-report` | Name of the uploaded JSON artifact |
+| Input           | Default              | Purpose                                                     |
+| --------------- | -------------------- | ----------------------------------------------------------- |
+| `path`          | `.`                  | Repository path to scan, relative to the workflow workspace |
+| `fail-on`       | `error`              | Fail on `error`, `warning`, or `never`                      |
+| `artifact-name` | `repo-doctor-report` | Name of the uploaded JSON artifact                          |
 
 The Action exposes `report-path`, `errors`, `warnings`, and `findings` outputs for later steps. See [the complete example](examples/repo-doctor.yml).
 
